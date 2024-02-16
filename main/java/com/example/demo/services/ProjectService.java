@@ -16,12 +16,16 @@ public class ProjectService {
 
 	@Autowired
 	public ProjectRepo projectRepo;
-	
+
 	public Project createProject(Project project) {
 		return projectRepo.save(project);
 	}
-	
-	public List<Project> getAll(){
+
+	public Project getProjectById(Integer id) {
+		return projectRepo.findById(id).orElse(null);
+	}
+
+	public List<Project> getAll() {
 		return projectRepo.findAll();
 	}
 }
