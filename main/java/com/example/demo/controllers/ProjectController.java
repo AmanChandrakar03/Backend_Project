@@ -1,7 +1,5 @@
 package com.example.demo.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,30 +14,38 @@ import com.example.demo.entities.Project;
 import com.example.demo.services.ProjectService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/projects")
 public class ProjectController {
 	@Autowired
-	public ProjectService projectService;
+	private ProjectService projectService;
 
-	@PostMapping("create")
+	public ProjectController(ProjectService projectService) {
+		this.projectService = projectService;
+	}
+
+	@PostMapping
 	public ResponseEntity<Project> createProject(@RequestBody Project project) {
 		System.out.println(project);
+		// Custom Exception Handling (if needed)
+		// if (project.getName() == null || project.getDate() == null ||
+		// project.getName().isEmpty()) {
+		// throw new CustomException("All fields are required");
+		// }
 		Project savedProject = projectService.createProject(project);
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
 	}
 
-	@GetMapping("{id}")
-	public ResponseEntity<Project> getProjectById(@PathVariable Integer id) {
-		Project project = projectService.getProjectById(id);
-		if (project != null) {
-			return ResponseEntity.ok(project);
-		} else {
-			return ResponseEntity.notFound().build();
+	@GetMapping("/{project_id}")
+	public ResponseEntity<?> getProjectById(@PathVariable Integer project_id) {
+		Project project = projectService.getProjectById(project_id);
+		if (project == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Project not found with ID: " + project_id);
 		}
+		return ResponseEntity.ok(project);
 	}
 
-	@GetMapping("getAll")
-	List<Project> getAll() {
-		return projectService.getAll();
+	@GetMapping
+	public ResponseEntity<?> getAll() {
+		return ResponseEntity.ok(this.projectService.getAll());
 	}
 }

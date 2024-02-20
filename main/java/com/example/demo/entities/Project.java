@@ -1,7 +1,7 @@
 package com.example.demo.entities;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 
 //import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
@@ -19,6 +19,16 @@ public class Project {
 	private String name;
 	@Column
 	private LocalDate date;
+	
+	public Project(int id, String name, LocalDate date) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.date = date;
+	}
+	public Project() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getId() {
 		return id;
 	}
