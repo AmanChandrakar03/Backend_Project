@@ -26,11 +26,7 @@ public class ProjectController {
 	@PostMapping
 	public ResponseEntity<Project> createProject(@RequestBody Project project) {
 		System.out.println(project);
-		// Custom Exception Handling (if needed)
-		// if (project.getName() == null || project.getDate() == null ||
-		// project.getName().isEmpty()) {
-		// throw new CustomException("All fields are required");
-		// }
+		
 		Project savedProject = projectService.createProject(project);
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
 	}

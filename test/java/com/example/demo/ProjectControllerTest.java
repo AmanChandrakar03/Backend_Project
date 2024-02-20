@@ -50,28 +50,13 @@ public class ProjectControllerTest {
 				.andExpect(jsonPath("$[1].name").value("Project 2"));
 	}
 
-//	@Test
-//	void testCreateProject() throws Exception {
-//		LocalDate startDate = LocalDate.of(2024, 2, 20);
-//		Project project = new Project();
-//		project.setId(4);
-//		project.setName("New Project");
-//		project.setDate(startDate);
-//
-//		when(projectRepository.save(project)).thenReturn(project);
-//
-//		mockMvc.perform(post("/projects").contentType(MediaType.APPLICATION_JSON)
-//				.content("{\"id\":4,\"name\":\"New Project\",\"date\":\"2024-02-20\"}")).andExpect(status().isCreated())
-//				.andExpect(jsonPath("$.id").exists()).andExpect(jsonPath("$.name").value("New Project"))
-//				.andExpect(jsonPath("$.date").value("2024-02-20"));
-//	}
+
 	@Test
 	void testCreateProject() throws Exception {
-	    // Mocking behavior
+	  
 	    Project project = new Project(4, "Project", LocalDate.now());
 	    when(projectRepository.save(any(Project.class))).thenReturn(project);
 	 
-	    // Performing POST request and verifying the response
 	    mockMvc.perform(post("/projects")
 	            .contentType(MediaType.APPLICATION_JSON)
 	            .content("{\"name\":\"Project\",\"start_date\":\"2024-02-21\"}"))
